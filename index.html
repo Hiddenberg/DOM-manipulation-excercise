@@ -33,11 +33,12 @@
       function createListElement(text) {
          let taskElement = document.createElement('li');
          taskElement.className = "task";
-         taskElement.innerText = text;
+         taskElement.innerHTML = `<span>${text}</span>`;
 
          // adding styles
          taskElement.style.display = "flex";
          taskElement.style.justifyContent = "space-between";
+         taskElement.style.alignItems = "center";
          taskElement.style.background = "#6f84a5";
          taskElement.style.color = "white";
          taskElement.style.margin = "1rem ";
@@ -48,15 +49,43 @@
          return taskElement;
       }
 
+      function createDeleteButton() {
+         let button = document.createElement('input');
+         button.type = "button";
+         button.value = "X";
+
+         // adding styles
+         button.style.backgroundColor = "red";
+         button.style.color = "white";
+         button.style.borderRadius = "100%";
+         button.style.borderColor = "#58668d";
+         button.style.padding = "0.2rem";
+
+         button.addEventListener('click', ({target}) => {
+            deleteListItem(target);
+         });
+
+         return button;
+      }
+
       function clearTextInput() {
          textInput.value = "";
+      }
+
+      function deleteListItem(deleteButton) {
+         let listElement = deleteButton.parentElement;
+
+         listElement.remove();
       }
 
 
       // Functions used by event listeners -------------------------------------------
       function addTask() {
          let newToDoItem = createListElement(textInput.value);
+         let deleteButton = createDeleteButton();
          let firstListItem = list.firstChild;
+
+         newToDoItem.append(deleteButton);
 
          list.insertBefore(newToDoItem, firstListItem);
       }
