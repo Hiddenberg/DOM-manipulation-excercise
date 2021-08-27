@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+   <title>To do list</title>
+</head>
+<body>
+   <div class="main-container">
+      <h1 class="app-title">To do list</h1>
+
+      <ul id="list">
+      </ul>
+      
+      <div class="task-inputs-wrapper">
+         <input type="text" id="textInput" maxlength="50">
+         <input type="button" value="Add task" id="addTaskButton">
+      </div>
+
+      <input type="button" value="Clear everything" id="clearButton">
+   </div>
+
+
+   <script>
+      const addTaskButton = document.getElementById('addTaskButton');
+      const clearEverythingButton = document.getElementById('clearButton');
+      const textInput = document.getElementById('textInput');
+      const list = document.getElementById('list');
+
+      // Functions used by other functions -------------------------------------------
+      function createListElement(text) {
+         let taskElement = document.createElement('li');
+         taskElement.className = "task";
+         taskElement.innerText = text;
+
+         // adding styles
+         taskElement.style.display = "flex";
+         taskElement.style.justifyContent = "space-between";
+         taskElement.style.background = "#6f84a5";
+         taskElement.style.color = "white";
+         taskElement.style.margin = "1rem ";
+         taskElement.style.padding = "0.5rem ";
+         taskElement.style.borderRadius = "5px";
+         taskElement.style.listStyleType = "none";
+
+         return taskElement;
+      }
+
+      function clearTextInput() {
+         textInput.value = "";
+      }
+
+
+      // Functions used by event listeners -------------------------------------------
+      function addTask() {
+         let newToDoItem = createListElement(textInput.value);
+         let firstListItem = list.firstChild;
+
+         list.insertBefore(newToDoItem, firstListItem);
+      }
+
+      function clearAllTasks() {
+         list.innerHTML = "";
+      }
+
+
+      // Event listeners -------------------------------------------
+      addTaskButton.addEventListener('click', () => {
+         if (textInput.value) {
+            addTask();
+            clearTextInput();
+         }
+      });
+
+      clearEverythingButton.addEventListener('click', clearAllTasks);
+   </script>
+</body>
+</html>
